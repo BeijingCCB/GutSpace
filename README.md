@@ -1,7 +1,8 @@
 # GutSpace
 Tracing biogeographically-varying networks of the gut microbiota 
 
-about the data used
+**about the data used**
+
 GQ = Lumen
 MC = Caecum
 HC = Ileum
