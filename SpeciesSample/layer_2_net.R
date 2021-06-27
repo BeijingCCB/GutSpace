@@ -1,4 +1,3 @@
-rm(list = ls())
 load('species_cluster.Rdata')
 library(pbapply)
 library(parallel)
