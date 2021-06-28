@@ -1,6 +1,6 @@
 #! /path/to/Rscript
-args <- commandArgs(T)
-k = as.numeric(args[1])
+#args <- commandArgs(T)
+#k = as.numeric(args[1])
 
 df <- read.csv("SpeciesSample.csv",row.names = 1)
 df <- log(df+1)
@@ -179,6 +179,6 @@ get_BIC <- function(rep,k){
   rownames(out_df) <- c('rep','BIC','LL')
   return(list(t(data.frame(out_df)),output))
 }
-
+#rep=80,k=7
 result <- get_BIC(80,7)
 save.image(paste0('k','.Rdata'))
