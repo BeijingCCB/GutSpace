@@ -1,4 +1,4 @@
-
+#need network results
 get_ind_mean <- function(i){
   tmp <- all_net[[i]]
   get_ind <- function(i){
