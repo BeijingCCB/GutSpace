@@ -1,3 +1,4 @@
+#use cluster results
 load('species_cluster.Rdata')
 library(pbapply)
 library(parallel)
@@ -29,9 +30,6 @@ get_module_net <- function(){
       M <- clean_data[,-col]
       x_matrix <- M
       x_matrix <- as.matrix(x_matrix)
-      #vec <- sapply(1:length(M[1,]),function(c)cor(m,M[,c]))
-      #x_matrix <- M[,which( vec %in% -sort(-vec)[1:(n/log(n))] )]
-      #x_matrix <- as.matrix(x_matrix)
       name <- colnames(clean_data)
       ridge1_cv <- cv.glmnet(x = x_matrix, y = m,type.measure = "mse", 
                              family="gaussian",nfold = 3,alpha = 0)
