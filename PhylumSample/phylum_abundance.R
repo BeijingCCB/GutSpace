@@ -1,3 +1,4 @@
+
 get_ind_mean <- function(i){
   tmp <- all_net[[i]]
   get_ind <- function(i){
@@ -52,23 +53,7 @@ df3 <- df3[1:7,]
 df3 <- df3[order(df3$name),]
 df4 <- df4[order(df4$name),]
 
-b=0.3;a=0.1
-k=(b-a)/(max(df3$ind)-min(df3$ind))
-
-d1up=data.frame(x1=c(1:7-k*(df3$ind-min(df3$ind))-0.05), 
-                x2=c(1:7+k*(df3$ind-min(df3$ind))+0.05),
-                y1=c(df3$ind), 
-                y2=c(df3$ind+df3$up))
-d1down=data.frame(x1=c(1:7-k*(df3$ind-min(df3$ind))-0.05), 
-                  x2=c(1:7+k*(df3$ind-min(df3$ind))+0.05),
-                  y1=c(df3$ind), 
-                  y2=c(df3$ind+df3$down))
-k=(b-a)/(max(df4$ind)-min(df4$ind))
-d2up <- data.frame(x1=c(c(2,3,4)-k*(df4$ind-min(df4$ind)-0.05)), 
-                   x2=c(c(2,3,4)+k*(df4$ind-min(df4$ind))+0.05),
-                   y1=c(df4$ind), 
-                   y2=c(df4$ind+df4$up))
-d2down <- data.frame(x1=c(c(2,3,4)-k*(df4$ind-min(df4$ind)-0.05)), 
-                     x2=c(c(2,3,4)+k*(df4$ind-min(df4$ind))+0.05),
-                     y1=c(df4$ind), 
-                     y2=c(df4$ind+df4$down))
+#UC_net attribute
+df3
+#HC_net attribute
+df4
