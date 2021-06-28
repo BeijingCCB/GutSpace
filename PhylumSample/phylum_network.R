@@ -73,7 +73,6 @@ get_legendre_par <- function(times,order) {
                            family="gaussian",nfold = 3,alpha = 0)
     best_ridge_coef <- abs(as.numeric(coef(ridge1_cv, s = ridge1_cv$lambda.min))[-1])
     
-    coef <- sapply(1:length(best_ridge_coef),function(c)get_coef(best_ridge_coef[c]))
     fit_res <- cv.glmnet(x = x_matrix, y = m,type.measure = "mse", family="gaussian",
                          nfold = 3,alpha = 1,
                          penalty.factor = 1/best_ridge_coef,
@@ -233,3 +232,43 @@ get_net <- function(i){
 }
 
 all_net <- pblapply(1:length(exp_index2),function(c)get_net(c))
+
+get_net_output <- function(j){
+  get_after <- function(i){
+    temp <- matrix(NA,nrow = length(i[[2]]),ncol=3)
+    temp[,1] <- i[[2]]
+    temp[,2] <- i[[1]]
+    temp[,3] <- i[[5]][2:(length(i[[2]])+1)]
+    colnames(temp) <- c('from','to','dep_effect')
+    temp <- data.frame(temp)
+    temp[,3] <- as.numeric(as.character(temp[,3]))
+    return(temp)
+  }
+  links <- do.call(rbind,lapply(j, get_after))
+  get_link_color <- function(i){
+    tmp <- links$dep_effect[i]
+    if (tmp >= 0 ) {
+      tmp2 <- '+'
+    } else {
+      tmp2 <- '-'
+    }
+    return(tmp2)
+  }
+  links$effect_type <- sapply(1:nrow(links),function(c)get_link_color(c))
+  
+  get_ind <- function(i){
+    temp <- i[[5]][1]
+    return(temp)
+  }
+  nodes <- data.frame(unique(links[,2]),paste0('P',1:length(unique(links[,2]))),sapply(j,get_ind))
+  colnames(nodes) <- c("id","name","received_effect")
+  nodes$influence <- aggregate(dep_effect ~ to, data = links, sum)[,2]
+  
+  links$dep_effect <- abs(links$dep_effect)
+  return(list(links,nodes))
+}
+result <- lapply(1:10,function(c)get_net_output(all_net[[c]]))
+
+#output UC_Lumen net
+write.csv(result[[1]][[1]],file='UC_Lumen1.csv')
+write.csv(result[[1]][[2]],file='UC_Lumen2.csv')
